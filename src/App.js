@@ -1,6 +1,4 @@
-import logo from './logo.svg';
 import './App.css';
-import {getAll, get} from './utils/gameApiRequests';
 import Navbar from './components/Navbar';
 import Home from './components/Home';
 import Footer from './components/Footer';
@@ -14,7 +12,7 @@ function App() {
         <Home/>
       </header>
       <main>
-      <GameList/>
+        <GameList/>
       </main>
       <Footer/>
     </>
