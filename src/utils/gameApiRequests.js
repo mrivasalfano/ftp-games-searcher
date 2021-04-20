@@ -7,14 +7,26 @@ const axiosInstance = axios.create({
     }
 });
 
-const getAllSortedByParam = (sortParam) => {
+const getAll = (sort, tags, platform) => {
     return new Promise(async(resolve, reject) => {
         try {
-            const response = await axiosInstance.get('/games', {
-                params: {
-                    'sort-by': sortParam
-                }
-            });
+            const params = {
+                'sort-by': sort
+            };
+
+            let resource = 'games';
+
+            if (tags.length > 0) {
+                resource = 'filter';
+                params.tag = tags.join('.');
+            }
+            
+            if (platform !== '')
+                params.platform = platform;
+
+            console.log(params);
+            
+            const response = await axiosInstance.get(`/${resource}`, {params});
             resolve(response);
         } catch (error) {
             reject(error);
@@ -33,4 +45,4 @@ const get = (id) => {
     });
 }
 
-export { getAllSortedByParam, get};
+export { getAll, get};
