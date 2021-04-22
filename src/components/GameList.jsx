@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { getAll} from '../utils/gameApiRequests';
 import GameCard from './GameCard';
-import { MdNavigateNext, MdNavigateBefore, MdFilterList, MdCheckBoxOutlineBlank } from 'react-icons/md';
+import { MdNavigateNext, MdNavigateBefore, MdFilterList, MdCheckBoxOutlineBlank, MdCheckBox } from 'react-icons/md';
 class GameList extends Component {
     constructor(props) {
         super(props);
@@ -91,6 +91,7 @@ class GameList extends Component {
     }
 
     addTagToFilter = (e) => {
+        console.log(e.target);
         const tag = e.target.getAttribute('tag');
         const selectedTags = [...this.state.selectedTags];
         selectedTags.push(tag);
@@ -108,8 +109,16 @@ class GameList extends Component {
         this.setState({showFilters: false});
     }
 
+    removeTagFromFilter = (e) => {
+        console.log(e.target);
+        const tag = e.target.getAttribute('tag');
+        let selectedTags = [...this.state.selectedTags];
+        selectedTags = selectedTags.filter(val => val !== tag);
+        this.setState({ selectedTags })
+    }
+
     render() {
-        const {games, showGamesFrom, gamesToShow, showFilters, selectedSort, selectedPlatform} = this.state;
+        const {games, showGamesFrom, gamesToShow, showFilters, selectedSort, selectedPlatform, selectedTags} = this.state;
         const tags = ["mmorpg", "shooter", "strategy", "moba", "racing", "sports", "social", "sandbox", "open-world", "survival", "pvp", "pve", "pixel", "voxel", "zombie", "turn-based", "first-person", "third-Person", "top-down", "tank", "space", "sailing", "side-scroller", "superhero", "permadeath", "card", "battle-royale", "mmo", "mmofps", "mmotps", "3d", "2d", "anime", "fantasy", "sci-fi", "fighting", "action-rpg", "action", "military", "martial-arts", "flight", "low-spec", "tower-defense", "horror", "mmorts"];
 
         return (
@@ -158,7 +167,10 @@ class GameList extends Component {
                             <label className="block mb-2">Categorías</label>
                             {tags.map((tag, index) => (
                                 <div key={index} className="flex items-center">
-                                    <MdCheckBoxOutlineBlank tag={tag} onClick={this.addTagToFilter} className="mr-2"/>
+                                    {selectedTags.find(val => val === tag)
+                                        ? <div tag={tag} onClick={this.removeTagFromFilter} className="mr-2"><MdCheckBox className="pointer-events-none"/></div>
+                                        : <div tag={tag} onClick={this.addTagToFilter} className="mr-2"><MdCheckBoxOutlineBlank className="pointer-events-none" /></div>
+                                    }
                                     <span>{tag}</span>
                                 </div>
                             ))}
