@@ -6,7 +6,7 @@ class GameCard extends Component {
 
         return (
             <div className="shadow-md rounded my-10">
-                <img src={thumbnail} />
+                <img src={thumbnail} alt="game image"/>
                 <h3 className="text-xl uppercase font-bold ml-2 mt-3">{title}</h3>
                 <p className="ml-2 mt-5">{short_description}</p>
             </div>

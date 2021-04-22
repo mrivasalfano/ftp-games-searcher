@@ -150,8 +150,8 @@ class GameList extends Component {
                         <div className="mb-10">
                             <label className="block mb-2">Ordenar por</label>
                             <div>
-                                <button onClick={this.selectSortParam} sort-name="relevance"    className={"focus:outline-none border-gray-400 py-1 px-2 border-2 rounded-full m-2 " + (selectedSort === 'relevance'    && 'bg-gray-900 text-white')}>Relevancia</button>
-                                <button onClick={this.selectSortParam} sort-name="popularity"   className={"focus:outline-none border-gray-400 py-1 px-2 border-2 rounded-full m-2 " + (selectedSort === 'popularity'   && 'bg-gray-900 text-white')}>Popularidad</button>
+                                <button onClick={this.selectSortParam} sort-name="relevance"  className={"focus:outline-none border-gray-400 py-1 px-2 border-2 rounded-full m-2 " + (selectedSort === 'relevance'    && 'bg-gray-900 text-white')}>Relevancia</button>
+                                <button onClick={this.selectSortParam} sort-name="popularity" className={"focus:outline-none border-gray-400 py-1 px-2 border-2 rounded-full m-2 " + (selectedSort === 'popularity'   && 'bg-gray-900 text-white')}>Popularidad</button>
                                 <button onClick={this.selectSortParam} sort-name="release-date" className={"focus:outline-none border-gray-400 py-1 px-2 border-2 rounded-full m-2 " + (selectedSort === 'release-date' && 'bg-gray-900 text-white')}>Salida</button>
                                 <button onClick={this.selectSortParam} sort-name="alphabetical" className={"focus:outline-none border-gray-400 py-1 px-2 border-2 rounded-full m-2 " + (selectedSort === 'alphabetical' && 'bg-gray-900 text-white')}>Nombre</button>
                             </div>
@@ -159,7 +159,7 @@ class GameList extends Component {
                         <div className="mb-10">
                             <label className="block mb-2">Plataforma</label>
                             <div>
-                                <button onClick={this.selectPlatform} platform="pc"      className={"focus:outline-none border-gray-400 py-1 px-2 border-2 rounded-full m-2 " + (selectedPlatform === 'pc' && 'bg-gray-900 text-white')}>PC</button>
+                                <button onClick={this.selectPlatform} platform="pc" className={"focus:outline-none border-gray-400 py-1 px-2 border-2 rounded-full m-2 " + (selectedPlatform === 'pc' && 'bg-gray-900 text-white')}>PC</button>
                                 <button onClick={this.selectPlatform} platform="browser" className={"focus:outline-none border-gray-400 py-1 px-2 border-2 rounded-full m-2 " + (selectedPlatform === 'browser' && 'bg-gray-900 text-white')}>Navegador</button>
                             </div>
                         </div>
