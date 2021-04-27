@@ -23,7 +23,7 @@ class GameList extends Component {
     getAllGames = async() => {
         try {
             const response = await getAll(this.state.selectedSort, this.state.selectedTags, this.state.selectedPlatform);
-            console.log(response.data.length);
+
             if (response.status === 200)
                 this.setState({games: response.data})
         } catch (error) {
@@ -39,7 +39,7 @@ class GameList extends Component {
 
             while (i < from+quantity && i < games.length ) {
                 const game = games[i];
-                gamesElements.push(<GameCard key={i} title={game.title} thumbnail={game.thumbnail} short_description={game.short_description}/>);
+                gamesElements.push(<GameCard key={i} title={game.title} genre={game.genre} thumbnail={game.thumbnail} short_description={game.short_description} game_site={game.game_url}/>);
                 i++;
             }
         }
@@ -120,7 +120,7 @@ class GameList extends Component {
     render() {
         const {games, showGamesFrom, gamesToShow, showFilters, selectedSort, selectedPlatform, selectedTags} = this.state;
         const tags = ["mmorpg", "shooter", "strategy", "moba", "racing", "sports", "social", "sandbox", "open-world", "survival", "pvp", "pve", "pixel", "voxel", "zombie", "turn-based", "first-person", "third-Person", "top-down", "tank", "space", "sailing", "side-scroller", "superhero", "permadeath", "card", "battle-royale", "mmo", "mmofps", "mmotps", "3d", "2d", "anime", "fantasy", "sci-fi", "fighting", "action-rpg", "action", "military", "martial-arts", "flight", "low-spec", "tower-defense", "horror", "mmorts"];
-
+        console.log(games[0]);
         return (
             <>
                 {/* RESULTADOS Y BOTON FILTROS */}
