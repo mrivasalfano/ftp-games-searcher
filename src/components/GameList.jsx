@@ -8,7 +8,7 @@ class GameList extends Component {
         this.state = {
             games: [],
             selectedSort: 'relevance',
-            gamesToShow: 5,
+            gamesToShow: 10,
             showGamesFrom: 0,
             selectedTags: [],
             selectedPlatform: '',
@@ -18,17 +18,33 @@ class GameList extends Component {
 
     componentDidMount = () => {
         this.getAllGames();
+        this.calculateGamesToShow();
+
+        window.addEventListener('resize', this.calculateGamesToShow);
     }
 
     getAllGames = async() => {
         try {
             const response = await getAll(this.state.selectedSort, this.state.selectedTags, this.state.selectedPlatform);
-            console.log(response.data.length);
+
             if (response.status === 200)
                 this.setState({games: response.data})
         } catch (error) {
             console.log(error);
         }
+    }
+
+    calculateGamesToShow = () => {
+        const screenWidth = window.screen.width;
+
+        if (screenWidth >= 640 && screenWidth < 768)
+            this.setState({gamesToShow: 20});
+        
+        if (screenWidth >= 768 && screenWidth < 1024)
+            this.setState({ gamesToShow: 18 });
+
+        if (screenWidth >= 1024)
+            this.setState({ gamesToShow: 20 });
     }
     
     renderGames = (games, from, quantity) => {
@@ -39,7 +55,7 @@ class GameList extends Component {
 
             while (i < from+quantity && i < games.length ) {
                 const game = games[i];
-                gamesElements.push(<GameCard key={i} title={game.title} thumbnail={game.thumbnail} short_description={game.short_description}/>);
+                gamesElements.push(<GameCard key={i} title={game.title} genre={game.genre} thumbnail={game.thumbnail} short_description={game.short_description} game_site={game.game_url}/>);
                 i++;
             }
         }
@@ -120,11 +136,11 @@ class GameList extends Component {
     render() {
         const {games, showGamesFrom, gamesToShow, showFilters, selectedSort, selectedPlatform, selectedTags} = this.state;
         const tags = ["mmorpg", "shooter", "strategy", "moba", "racing", "sports", "social", "sandbox", "open-world", "survival", "pvp", "pve", "pixel", "voxel", "zombie", "turn-based", "first-person", "third-Person", "top-down", "tank", "space", "sailing", "side-scroller", "superhero", "permadeath", "card", "battle-royale", "mmo", "mmofps", "mmotps", "3d", "2d", "anime", "fantasy", "sci-fi", "fighting", "action-rpg", "action", "military", "martial-arts", "flight", "low-spec", "tower-defense", "horror", "mmorts"];
-
+        console.log(games[0]);
         return (
             <>
                 {/* RESULTADOS Y BOTON FILTROS */}
-                <div className="flex bg-gray-200 justify-between items-center px-4 py-2">
+                <div className="flex bg-gray-100 justify-between items-center px-4 py-2">
                     <span>{games.length} resultados</span>
                     <div onClick={this.showFilters} className="flex items-center">
                         <MdFilterList className="mr-2"/>
@@ -133,15 +149,14 @@ class GameList extends Component {
                 </div>
 
                 {/* LISTA DE JUEGOS Y NAVEGACION */}
-                <div className="bg-gray-100 w-screen px-6 py-5">
+                <div className="w-screen px-6 py-5 sm:grid sm:gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
                     {this.renderGames(games, showGamesFrom, gamesToShow)}
+                </div>
 
-                    <div className="text-center">
-                        <MdNavigateBefore style={{ fontSize: "40px" }} className="inline-block" onClick={this.showPreviousGames}/>
-                        <span className="mx-10">{showGamesFrom + gamesToShow < games.length ? `${showGamesFrom + 1} - ${showGamesFrom + gamesToShow}` : `${showGamesFrom + 1} - ${games.length}`}</span>
-                        <MdNavigateNext style={{fontSize: "40px"}} className="inline-block" onClick={this.showNextGames}/>
-                    </div>
-
+                <div className="text-center">
+                    <MdNavigateBefore style={{ fontSize: "40px" }} className="inline-block" onClick={this.showPreviousGames}/>
+                    <span className="mx-10">{showGamesFrom + gamesToShow < games.length ? `${showGamesFrom + 1} - ${showGamesFrom + gamesToShow}` : `${showGamesFrom + 1} - ${games.length}`}</span>
+                    <MdNavigateNext style={{fontSize: "40px"}} className="inline-block" onClick={this.showNextGames}/>
                 </div>
 
                 {/* FILTROS */}
@@ -168,8 +183,8 @@ class GameList extends Component {
                             {tags.map((tag, index) => (
                                 <div key={index} className="flex items-center">
                                     {selectedTags.find(val => val === tag)
-                                        ? <div tag={tag} onClick={this.removeTagFromFilter} className="mr-2"><MdCheckBox className="pointer-events-none"/></div>
-                                        : <div tag={tag} onClick={this.addTagToFilter} className="mr-2"><MdCheckBoxOutlineBlank className="pointer-events-none" /></div>
+                                        ? <div tag={tag} onClick={this.removeTagFromFilter} className="mr-2"><MdCheckBox className="pointer-events-none text-xl"/></div>
+                                        : <div tag={tag} onClick={this.addTagToFilter} className="mr-2"><MdCheckBoxOutlineBlank className="pointer-events-none text-xl" /></div>
                                     }
                                     <span>{tag}</span>
                                 </div>
