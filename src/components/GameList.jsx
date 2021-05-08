@@ -89,6 +89,7 @@ class GameList extends Component {
     }
 
     showFilters = () => {
+        document.body.classList.add('filters-open');
         this.setState({showFilters: true});
     }
 
@@ -122,6 +123,7 @@ class GameList extends Component {
 
     applyFilters = () => {
         this.getAllGames();
+        document.body.classList.remove('filters-open');
         this.setState({showFilters: false});
     }
 
@@ -160,8 +162,8 @@ class GameList extends Component {
                 </div>
 
                 {/* FILTROS */}
-                <div className={"flex flex-col fixed top-0 h-screen w-screen bg-gray-50 transition duration-200 ease-in-out transform " + (showFilters ? 'translate-x-0' : 'translate-x-full')}>
-                    <div className="overflow-y-auto flex-grow p-4">
+                <div className={"flex flex-col fixed top-0 z-50 h-full w-screen bg-gray-50 transition duration-200 ease-in-out transform m-0 " + (showFilters ? 'translate-x-0' : 'translate-x-full')}>
+                    <div className="overflow-y-scroll flex-grow p-4">
                         <div className="mb-10">
                             <label className="block mb-2">Ordenar por</label>
                             <div>
@@ -192,8 +194,8 @@ class GameList extends Component {
                         </div>
                     </div>
                     <div className="flex justify-around py-4 border-t-2 border-gray-200">
-                    <button onClick={this.clearFilters} className="focus:outline-none py-2 px-4 border-2 border-gray-900 rounded-md">Borrar</button>
-                    <button onClick={this.applyFilters} className="focus:outline-none text-white py-2 px-4 bg-gray-900 rounded-md">Aplicar</button>
+                        <button onClick={this.clearFilters} className="focus:outline-none py-2 px-4 border-2 border-gray-900 rounded-md">Borrar</button>
+                        <button onClick={this.applyFilters} className="focus:outline-none text-white py-2 px-4 bg-gray-900 rounded-md">Aplicar</button>
                     </div>
                 </div>
             </>
